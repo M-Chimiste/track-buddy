@@ -11,7 +11,7 @@ Track Buddy has a very small BOM from an electronics perspective.  It requires a
 |PIN 2|SDA|
 |PIN 3|SCL|
 
-I didn't use a PCB for any of the connections.  All connections were soldered in place with wire.  I used some heat shrink tubing on the tactile switche to make sure they didn't short anything.
+I didn't use a PCB for any of the connections.  All connections were soldered in place with wire.  I used some heat shrink tubing on the tactile switch to make sure they didn't short anything.
 
 ## Housing
 Housing is completely 3D printed.  Original housing was created with a QIDI Print X-Plus with PLA filament at 35% infill.  Any 3D printer should be sufficient for printing this and you can probably get away will less infill if you want.  In addition to the 3D printed parts you also need four M2 nuts and four M2 screws.  The M2 nuts were bonded to the 3D printed housing with a small amount of epoxy (I like to use JB Weld Kwik, but any epoxy should do).  After bonding the nuts you can affix the tactile switch to the top of the cover using some hot glue (or other adhesive, though I didn't need to use any since everything fit quite snug without it).
