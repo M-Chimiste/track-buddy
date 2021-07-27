@@ -1,6 +1,7 @@
-// Track Buddy
-// Christian Merrill
-// MIT 2.0
+// Track Buddy Firmware
+// Author: Christian Merrill
+// License: MIT 2.0
+// Version: 0.1
 
 #include <Wire.h>
 #include <Joystick.h>
@@ -14,7 +15,6 @@ int yAxis_ = 0;
 int rzAxis_ = 0;
 
 // Initalize the Joystick Data Structure
-//Defining the Joystick
 //The Joystick is defined in the following setup:
 //Joystick(Joystick HID ID, Joystick Type, Button Count, Hat Switch Count, Include X, Include Y, Include Z, Include Rx, Include Ry, Include Rz, Include Rudder, Include Throttle, Include Accelerator, Include Brake, Include Steering
 //Joystick HID ID: A Hex value identifier for HID Device Recognition (default: 0x03). DO NOT USE 0x01 or 0x02
@@ -36,9 +36,12 @@ int rzAxis_ = 0;
 Joystick_ Joystick(0x16, JOYSTICK_TYPE_JOYSTICK, 0, 0, true, true, false, false, false, true, false, false, false, false, false);  //Make sure that hex value is unique, update as needed.
 
 BNO080 BNO080_;
-const bool debug = false;
-const bool initAutoSendState = true;
-const int smoothing = 1023;
+// Constants for Program
+const bool debug = false;  // enables serial printing if True (outputs degrees not ints)
+const bool initAutoSendState = true;  // used to automatically send joystick state
+const int smoothing = 1023; // used to map roll/pitch/yaw to an integer value 
+const int debounce = 20;  // delay in ms for debouncing
+const int sendRate = 30; // send rate in ms for the BNO080 IMU;
 
 float xOffset = 0;
 float yOffset = 0;
@@ -49,7 +52,7 @@ void setup()
   if (debug == true) {
     Serial.begin(115200);
     Serial.println();
-    Serial.println("BNO080 Read Example");
+    Serial.println("Track-buddy v0.1. Debug mode enabled.");
   }
 
   Wire.begin();
@@ -59,17 +62,17 @@ void setup()
   if (debug == true){
     if (BNO080_.begin() == false)
     {
-      Serial.println(F("BNO080 not detected at default I2C address. Check your jumpers and the hookup guide. Freezing..."));
+      Serial.println(F("BNO080 not detected. Check connection and try again."));
       while (1);
     }
   }
 
-  Wire.setClock(400000); //Increase I2C data rate to 400kHz
+  Wire.setClock(400000);
 
   BNO080_.enableRotationVector(30); //Send data update every 30ms
   if (debug == true) {
-    Serial.println(F("Rotation vector enabled"));
-    Serial.println(F("Output in form roll, pitch, yaw"));
+    Serial.println(F("BNO080 detected and rotation vector has been enabled"));
+    Serial.println(F("Output in form of degrees roll, pitch, yaw"));
   }
 }
 
@@ -79,23 +82,27 @@ void loop()
 
   if (BNO080_.dataAvailable() == true)
   {
+    // Get raw values from sensor, example taken from Spark Fun library
     float roll = (BNO080_.getRoll()) * 180.0 / PI; // Convert roll to degrees
     float pitch = (BNO080_.getPitch()) * 180.0 / PI; // Convert pitch to degrees
     float yaw = (BNO080_.getYaw()) * 180.0 / PI; // Convert yaw / heading to degrees
   
-  
+    // Apply offset to roll/pitch/yaw
     roll = roll - xOffset;
     pitch = pitch - yOffset;
     yaw = yaw - rzOffset;
 
+    // Convert roll/pitch/yaw into integers for sending to joystick axis values
     xAxis_ = map(roll, -180, 180, 0, smoothing);
     yAxis_ = map(pitch, -180, 180, 0, smoothing);
     rzAxis_ = map(yaw, -180, 180, 0, smoothing);
 
+    // Set axis values to joystick
     Joystick.setXAxis(xAxis_);
     Joystick.setYAxis(yAxis_);
     Joystick.setRzAxis(rzAxis_);
   
+    // Check for compensation button push
     int currentCompState = !digitalRead(compButton);
 
     if (currentCompState != lastCompState) {
@@ -115,6 +122,6 @@ void loop()
       Serial.println();
     }
 
-    delay(20);
+    delay(debounce); // Delay for debouncing
   } 
 }
