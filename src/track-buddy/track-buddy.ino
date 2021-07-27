@@ -90,7 +90,7 @@ void loop()
 
     xAxis_ = map(roll, -180, 180, 0, smoothing);
     yAxis_ = map(pitch, -180, 180, 0, smoothing);
-    rzAxis_ = map(pitch, -180, 180, 0, smoothing);
+    rzAxis_ = map(yaw, -180, 180, 0, smoothing);
 
     Joystick.setXAxis(xAxis_);
     Joystick.setYAxis(yAxis_);
