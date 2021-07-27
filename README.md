@@ -5,6 +5,7 @@ Arduino based head tracker with the BNO08X IMU.
 Track Buddy has a very BOM from an electronics perspective.  It requires an Arduino Pro Micro, a BNO080, and a tactile switch.  The tactile switch is wired into pin 10 and attached to the ground of the Pro Micro. I used a 6mm x 6mm x 9mm one I had lying around, but realistically anything longer than 4mm should work (the top case thickness is ~3mm when printed). The BNO080 is wired to the Pro Micro as follows:
 
 |Pro Micro Pin|BNO080 Pin|
+|-----|-----|
 |VIN |VIN|
 |GND|GND|
 |PIN 2|SDA|
@@ -30,6 +31,8 @@ Track Buddy is meant to be used in conjunction with the OpenTrack software.  The
 First: Make sure that you select your input as Joystick input and select the appropriate device (Either Arduino Leonardo or Track Buddy depending on how you flashed it).
 
 Second: Configure your mapping as follows:
+|Mapping|Value|
+|-----|-----|
 |X|Disabled|
 |Y|Disabled|
 |Z|Disabled|
