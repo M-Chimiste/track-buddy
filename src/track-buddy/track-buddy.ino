@@ -36,7 +36,7 @@ int rzAxis_ = 0;
 Joystick_ Joystick(0x16, JOYSTICK_TYPE_JOYSTICK, 0, 0, true, true, false, false, false, true, false, false, false, false, false);  //Make sure that hex value is unique, update as needed.
 
 BNO080 BNO080_;
-const bool debug = true;
+const bool debug = false;
 const bool initAutoSendState = true;
 const int smoothing = 1023;
 
