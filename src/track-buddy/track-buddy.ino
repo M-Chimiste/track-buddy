@@ -2,6 +2,7 @@
 // Author: Christian Merrill
 // License: MIT 2.0
 // Version: 0.1
+// Tested on Arduino Pro Micro with BNO080 and IDE 1.8.15
 
 #include <Wire.h>
 #include <Joystick.h>
