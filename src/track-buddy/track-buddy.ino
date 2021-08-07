@@ -38,11 +38,11 @@ Joystick_ Joystick(0x16, JOYSTICK_TYPE_JOYSTICK, 0, 0, true, true, false, false,
 
 BNO080 BNO080_;
 // Constants for Program
-const bool debug = false;  // enables serial printing if True (outputs degrees not ints)
-const bool initAutoSendState = false;  // used to automatically send joystick state
+const bool debug = true;  // enables serial printing if True (outputs degrees not ints)
+const bool initAutoSendState = true;  // used to automatically send joystick state
 const int smoothing = 1023; // used to map roll/pitch/yaw to an integer value 
-const int debounce = 20;  // delay in ms for debouncing
-const int sendRate = 30; // send rate in ms for the BNO080 IMU;
+const int debounce = 1;  // delay in ms for debouncing
+const int sendRate = 1; // send rate in ms for the BNO080 IMU;
 
 float xOffset = 0;
 float yOffset = 0;
@@ -122,7 +122,6 @@ void loop()
       Serial.print(yaw, 1);
       Serial.println();
     }
-    Joystick.sendState()
-    delay(debounce); // Delay for debouncing
+    //delay(debounce); // Delay for debouncing
   } 
 }
