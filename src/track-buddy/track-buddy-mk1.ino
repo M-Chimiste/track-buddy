@@ -1,4 +1,4 @@
-// Track Buddy Firmware
+// Track Buddy Firmware Mk1
 // Author: Christian Merrill
 // License: MIT 2.0
 // Version: 0.1
@@ -8,9 +8,9 @@
 #include <Joystick.h>
 #include <SparkFun_BNO080_Arduino_Library.h>
 
-#define compButton 10
+#define tareButton 10
 
-int lastCompState = 0;
+int lastTareState = 0;
 int xAxis_ = 0;
 int yAxis_ = 0;
 int rzAxis_ = 0;
@@ -57,20 +57,17 @@ void setup()
   }
 
   Wire.begin();
-  pinMode(compButton, INPUT_PULLUP);
+  pinMode(tareButton, INPUT_PULLUP);
   Joystick.begin();
   
-  if (debug == true){
-    if (BNO080_.begin() == false)
-    {
-      Serial.println(F("BNO080 not detected. Check connection and try again."));
-      while (1);
-    }
-  }
-
+  if (BNO080_.begin() == false) {
+     Serial.println(F("BNO080 not detected. Check connection and try again."));
+     while (1);
+   }
+  
   Wire.setClock(400000);
 
-  BNO080_.enableRotationVector(30); //Send data update every 30ms
+  BNO080_.enableRotationVector(sendRate); //Send data update every 30ms
   if (debug == true) {
     Serial.println(F("BNO080 detected and rotation vector has been enabled"));
     Serial.println(F("Output in form of degrees roll, pitch, yaw"));
@@ -103,10 +100,10 @@ void loop()
     Joystick.setYAxis(yAxis_);
     Joystick.setRzAxis(rzAxis_);
   
-    // Check for compensation button push
-    int currentCompState = !digitalRead(compButton);
+    // Check for tare button push
+    int currentTareState = !digitalRead(tareButton);
 
-    if (currentCompState != lastCompState) {
+    if (currentTareState != lastTareState) {
       // set current axis values as offset from internal measures of current values
       xOffset = (BNO080_.getRoll()) * 180.0 / PI;
       yOffset = (BNO080_.getPitch()) * 180.0 / PI;
