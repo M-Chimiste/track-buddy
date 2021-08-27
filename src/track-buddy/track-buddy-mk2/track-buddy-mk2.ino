@@ -106,12 +106,26 @@ void loop()
       roll = (BNO080_.getRoll()) * 180.0 / PI; // Convert roll to degrees
       pitch = (BNO080_.getPitch()) * 180.0 / PI; // Convert pitch to degrees
       yaw = (BNO080_.getYaw()) * 180.0 / PI; // Convert yaw / heading to degrees
+
+      // Apply offset to roll/pitch/yaw
+      roll = roll - xOffset;
+      pitch = pitch - yOffset;
+      yaw = yaw - rzOffset;
+    
+      // Check for tare button push
+      currentTareState = !digitalRead(tareButton);
+
+      // debouncing not necessary for tare button
+      if (currentTareState != lastTareState) {
+        // set current axis values as offset from internal measures of current values
+        xOffset = (BNO080_.getRoll()) * 180.0 / PI;
+        yOffset = (BNO080_.getPitch()) * 180.0 / PI;
+        rzOffset = (BNO080_.getYaw()) * 180.0 / PI;
+    
+    }
     }
     
-    // Apply offset to roll/pitch/yaw
-    roll = roll - xOffset;
-    pitch = pitch - yOffset;
-    yaw = yaw - rzOffset;
+   
 
     // Convert roll/pitch/yaw into integers for sending to joystick axis values
     xAxis_ = map(roll, -180, 180, 0, smoothing);
@@ -123,17 +137,7 @@ void loop()
     Joystick.setYAxis(yAxis_);
     Joystick.setRzAxis(rzAxis_);
   
-    // Check for tare button push
-    currentTareState = !digitalRead(tareButton);
-
-    // debouncing not necessary for tare button
-    if (currentTareState != lastTareState) {
-      // set current axis values as offset from internal measures of current values
-      xOffset = (BNO080_.getRoll()) * 180.0 / PI;
-      yOffset = (BNO080_.getPitch()) * 180.0 / PI;
-      rzOffset = (BNO080_.getYaw()) * 180.0 / PI;
     
-    }
     
     currentPauseState = digitalRead(pauseButton);
     
@@ -146,9 +150,7 @@ void loop()
       if (lastPauseState == HIGH && currentPauseState == LOW) {
         paused = !paused;
       }
-//      else if(lastPauseState == LOW && currentPauseState == HIGH) {
-//        Serial.println("The button is released");
-//      }
+
 
       lastPauseState = currentPauseState;
     }
