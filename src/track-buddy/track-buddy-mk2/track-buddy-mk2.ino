@@ -8,8 +8,8 @@
 #include <Joystick.h>
 #include <SparkFun_BNO080_Arduino_Library.h>
 
-#define tareButton 10
-#define pauseButton 8
+#define tareButton 8
+#define pauseButton 10
 // #define pauseButton 9
 
 int currentTareState = 0;
@@ -32,7 +32,7 @@ bool paused = false;
 
 unsigned long lastPauseDebounceTime = 0;
 
-const bool debug = true;  // enables serial printing if True (outputs degrees not ints)
+const bool debug = false;  // enables serial printing if True (outputs degrees not ints)
 const bool initAutoSendState = false;  // used to automatically send joystick state
 const int smoothing = 1023; // used to map roll/pitch/yaw to an integer value 
 const int debounce = 1;  // delay in ms for debouncing
