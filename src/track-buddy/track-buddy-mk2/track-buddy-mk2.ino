@@ -8,9 +8,11 @@
 #include <Joystick.h>
 #include <SparkFun_BNO080_Arduino_Library.h>
 
+
+// You can use ANY of the pins for the buttons for the exception of the SDA and SCL pins
+// You can even change the arrangement of the buttons through updating these definitions (e.g. you wanted tare in back versus front etc)
 #define tareButton 8
 #define pauseButton 10
-// #define pauseButton 9
 
 int currentTareState = 0;
 int currentPauseState;
