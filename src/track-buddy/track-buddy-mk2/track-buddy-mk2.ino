@@ -89,7 +89,7 @@ void setup()
   
   Wire.setClock(400000);
 
-  BNO080_.enableRotationVector(sendRate); //Send data update every 30ms
+  BNO080_.enableGameRotationVector(sendRate); //Send data update every 30ms
   
   if (debug == true) {
     Serial.println(F("BNO080 detected and rotation vector has been enabled"));
