@@ -145,12 +145,6 @@ void loop()
       Serial.print(F(","));
       Serial.print(yaw, 1);
       Serial.print(F(","));
-      if (paused == true) {
-        Serial.print("Paused");
-      }
-      else {
-        Serial.print("Running");
-      }
       Serial.println();
     }
     
