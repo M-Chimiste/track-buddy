@@ -22,7 +22,7 @@ Note on the MK2 and MK1.5 variants:  On these variants I changed the parts list 
 
 ## Software
 
-Example baords.txt is included now so that you can have track buddy called track buddy on your PC's USB HID.  I might package this up into a custom hardware folder that you can use in the future without modifying your boards.txt, but it is not currently a priority.
+Example boards.txt is included now so that you can have track buddy called track buddy on your PC's USB HID.  I might package this up into a custom hardware folder that you can use in the future without modifying your boards.txt, but it is not currently a priority.
 
 Arduino IDE 1.8.15 was used for flashing the pro micro board.  Make sure you install the IDE and all the Arduino drivers.  Install the Joystick library and the Sparkfun BNO080 library.  Select the Leonardo Board and the COM port of your board and hit upload.
 
